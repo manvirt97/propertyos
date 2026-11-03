@@ -44,3 +44,10 @@ Cloudflare Pages: repository manvirt97/propertyos, branch main, build command ex
 ## Future gated work
 
 Real internal listing cards and regular updates require an approved data agreement and backend; secure cross-device portfolios and tenant management require authentication and protected storage; real AI analysis requires a secure service and explicit cost/security approval. None of these are implied by this iteration.
+
+
+## Verified market rates and resilience
+
+Rate values are sourced from four distinct official Bank of Canada Valet series (overnight `V39079`, chartered bank prime `V80691311`, five-year Government of Canada bond `V39053`, and five-year posted conventional mortgage `V80691335`). A scheduled, free public GitHub Action runs on weekdays, collects **each series independently**, validates dates and percentages, and publishes `public/rates-snapshot.json` when observations change. Cloudflare serves this static file from the **same origin**; no paid API, Cloudflare Function, account upgrade or secret key is required. The dashboard labels the **actual observation date** for every series and clearly marks missing/old records; it never equates a posted rate to a lender offer. The browser retains only last-known verified public rates for graceful network failures.
+
+The Market tab also includes a user-controlled Canadian fixed-rate mortgage payment sensitivity tool for ±1 percentage point; these are assumptions and not lender offers. For technical tests, run `npm test` and `npm run syntax`. If the scheduled update job fails, see the GitHub Actions workflow `Refresh official Bank of Canada rates`; do **not** replace unknown values with invented rates. Updating the JSON snapshot is not the same as confirming Cloudflare deployed the latest commit; verify the live `/rates-snapshot.json` response before claiming freshness.

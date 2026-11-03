@@ -1,5 +1,7 @@
 import {money,percent,analyze} from './finance.js';
-import {refinanceModel,borrowingPlan,expansionRunway,latestValet} from './oakfolio-finance.js';
+import {refinanceModel,borrowingPlan,expansionRunway} from './oakfolio-finance.js';
+import {hydrateRates,refreshRates,renderImpactCalculator,updateImpact} from './oakfolio-rates.js';
+import {SERIES} from './rate-data.js';
 import {readDeals} from './store.js';
 
 const e=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -30,7 +32,7 @@ const ext=(label,href)=>ref(href,label,'oak-link');
 function ratePanels(mini=false){
   const items=[['policy','BoC policy rate','V39079'],['prime','Chartered-bank prime','V80691311'],['bond','5-year GoC bond','V39053'],['posted','5-year posted mortgage','V80691335']];
   return '<div class="'+(mini?'oak-rates-mini':'oak-rate-grid')+'">'+items.map(([key,label,series])=>
-    '<div class="oak-rate-tile"><span>'+e(label)+'</span><strong data-rate-key="'+key+'">—</strong><small data-rate-date="'+key+'">Connecting to Bank of Canada…</small></div>').join('')+'</div>';
+    '<div class="oak-rate-tile"><span>'+e(label)+'</span><strong data-rate-key="'+key+'">—</strong><small data-rate-date="'+key+'">Checking official observations…</small>'+(!mini?'<small class="oak-rate-delta" data-rate-change="'+key+'"></small><a class="oak-rate-source" data-oak-rate-source="'+key+'" href="'+e(SERIES[key].source)+'" target="_blank" rel="noopener noreferrer">Official source ↗</a>':'')+'</div>').join('')+'</div>';
 }
 let dealReadError='';
 function safeDeals(){try{const deals=readDeals();dealReadError='';return deals}catch(err){dealReadError=err.message||'Saved data unreadable';return []}}
@@ -80,11 +82,11 @@ const rateSpecs=[['policy','Policy interest rate','V39079','Bank of Canada overn
 export function renderMarket(){
  return '<div class="oak-page"><span class="oak-label">MARKET INTELLIGENCE / CANADA</span><h1>Know the market.<br><em>Not just the mortgage.</em></h1><p class="oak-page-lede">Official policy, prime, bond and posted mortgage data—labelled by its actual observation date. These are benchmarks, not personalized borrowing offers.</p>'+
  '<div class="oak-panel-head oak-rate-toolbar"><div><span class="oak-label">BANK OF CANADA / VALET API</span><h2>Interest-rate monitor</h2></div><button type="button" class="oak-outline" data-oak-action="rates-refresh">↻ Refresh rates</button></div>'+
- ratePanels(false)+'<p class="oak-fine" data-oak-rate-status>Loading official observations. No values will be presented as live unless successfully retrieved.</p>'+
+ ratePanels(false)+'<p class="oak-fine oak-rate-explain" role="status" aria-live="polite" data-oak-rate-status>Checking published observations. Unavailable values stay blank.</p>'+renderImpactCalculator()+
  section('READ THE MARKET','What these rates actually mean.','Rates serve different purposes; confusing a benchmark with a mortgage offer can distort your underwriting.')+
  '<div class="oak-education-grid">'+rateSpecs.map(([id,title,series,detail,url])=>'<article class="oak-tutorial"><span class="oak-label">'+e(series)+'</span><h3>'+e(title)+'</h3><p>'+e(detail)+'</p>'+ext('Source and methodology',url)+'</article>').join('')+'</div>'+
  '<div class="oak-feature-note"><div><span class="oak-label">THE RATE-TO-DEAL WORKFLOW</span><h3>Turn market knowledge into a stress test.</h3><p>Choose a rate from your lender or scenario, then analyze payments, debt-service coverage and cash flow. Published rates should not silently replace your financing assumptions.</p></div>'+btn('Open Deal Analyzer','analyzer')+'</div>'+
- '<p class="oak-fine">Official sources: Bank of Canada Valet API. Data is publicly accessible without a paid API key, but browser access depends on the Bank’s CORS policy and availability. If unavailable, values stay blank and source links remain accessible.</p></div>';
+ '<p class="oak-fine">Official sources: Bank of Canada Valet API. A free scheduled job produces a verified static rate snapshot. Observations update according to each series publication schedule; a missing or outdated rate is clearly marked. No rate displayed here is a mortgage approval or quote.</p></div>';
 }
 export function renderRefinance(){
  let model=null,error='';try{model=refinanceModel(refi)}catch(x){error=x.message}
@@ -125,43 +127,8 @@ function promptText(){
  const goal={first:'buy my first Canadian rental property',refi:'evaluate a refinance to purchase another Canadian rental property',cash:'improve sustainable rental cash flow',multifamily:'scale from small properties into 5+ unit multifamily rentals'}[coachGoal];
  return 'I am researching how to '+goal+'. Act as a cautious Canadian real estate financing research assistant. Explain financing approaches, general eligibility questions, NOI and DSCR, cash reserves, refinancing pitfalls, important CMHC programs, and steps to verify up-to-date Bank of Canada rates and local rental laws. Separate facts from assumptions. Do not assume I qualify for a loan. Do not invent listings, rate quotes or returns. Give a prioritized action plan in plain language. This prompt intentionally includes no personal financial information.';
 }
-const SERIES={policy:'V39079',prime:'V80691311',bond:'V39053',posted:'V80691335'};
-async function fetchRates(force=false){
- if(!force&&rates&&Date.now()-rateAt<30*60*1000)return rates;
- if(ratePending&&!force)return ratePending;
- ratePending=(async()=>{
-   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
-   try{
-     const url='https://www.bankofcanada.ca/valet/observations/V39079,V80691311,V39053,V80691335/json?recent=80';
-     const res=await fetch(url,{mode:'cors',credentials:'omit',cache:'no-store',signal:controller.signal});
-     if(!res.ok)throw Error('Bank of Canada data service returned HTTP '+res.status);
-     const data=await res.json(),out={};
-     for(const [key,series] of Object.entries(SERIES))out[key]=latestValet(data,series);
-     rates=out;rateAt=Date.now();return rates;
-   }finally{clearTimeout(timer)}
- })();
- try{return await ratePending}finally{ratePending=null}
-}
-function paintRates(data,error){
- for(const [key] of Object.entries(SERIES)){
-  document.querySelectorAll('[data-rate-key="'+key+'"]').forEach(el=>{el.textContent=data?.[key]?data[key].rate.toFixed(2)+'%':'—'});
-  document.querySelectorAll('[data-rate-date="'+key+'"]').forEach(el=>{
-   if(!data?.[key])el.textContent='Unavailable · open official source';
-   else {
-    const age=(Date.now()-Date.parse(data[key].date+'T00:00:00Z'))/86400000;
-    el.textContent=(age>(key==='prime'||key==='posted'?14:7)?'Older observation · ':'As of ')+data[key].date;
-   }
-  });
- }
- document.querySelectorAll('[data-oak-rate-status]').forEach(el=>{
-  el.textContent=error?'Unable to retrieve live data ('+error+'). Source links are available.':'Official observations retrieved. Observation dates shown; not lending offers.';
- });
-}
 export function hydrateExperience(route){
- if(route==='market'||route==='overview'){
-  if(rates&&Date.now()-rateAt<30*60*1000)paintRates(rates);
-  else fetchRates().then(x=>paintRates(x),err=>paintRates(null,err.message||'network error'));
- }
+ if(route==='market'||route==='overview')hydrateRates();
 }
 function refreshView(){window.dispatchEvent(new Event('hashchange'))}
 function geoDistance(a,b,c,d){
@@ -178,7 +145,7 @@ export function activateExperience(){
   const el=ev.target;
   if(el.id==='oak-city'){putCity(el.value);return}
   if(el.matches('[data-oak-scope]')){
-   const scope=el.dataset.oakScope,key=el.name,target={refi,borrow,runway}[scope];
+   const scope=el.dataset.oakScope,key=el.name;if(scope==='impact'&&updateImpact(key,el.value)){const scroll=window.scrollY;refreshView();window.scrollTo(0,scroll);return}const target={refi,borrow,runway}[scope];
    if(!target||!Object.hasOwn(target,key))return;
    target[key]=el.value===''?'':Number(el.value);
    const scroll=window.scrollY;refreshView();window.scrollTo(0,scroll);
@@ -203,8 +170,8 @@ export function activateExperience(){
   const act=el.dataset.oakAction;
   if(act==='scroll-shortlist'){document.getElementById('oak-shortlist')?.scrollIntoView({behavior:'smooth',block:'start'});return}
   if(act==='rates-refresh'){
-   el.disabled=true;paintRates(null,'Refreshing');
-   try{const fresh=await fetchRates(true);paintRates(fresh)}catch(error){paintRates(null,error.message)}finally{el.disabled=false}
+   el.disabled=true;
+   try{const ok=await refreshRates();if(!ok)showToast('Could not reach newer official observations. Last verified data is retained.')}finally{el.disabled=false}
   }else if(act==='geolocate'){
    if(!navigator.geolocation){showToast('Location is not supported. Choose a city instead.');return}
    showToast('Your browser will request location permission. Coordinates are used only on your device.');

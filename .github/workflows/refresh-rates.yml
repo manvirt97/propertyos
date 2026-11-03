@@ -1,0 +1,43 @@
+name: Refresh official Bank of Canada rates
+on:
+  schedule:
+    - cron: '20 15 * * 1-5'
+    - cron: '20 22 * * 1-5'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/update-rates.mjs'
+      - 'public/rate-data.js'
+      - '.github/workflows/refresh-rates.yml'
+permissions:
+  contents: write
+concurrency:
+  group: oakfolio-rates
+  cancel-in-progress: true
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch and independently validate official observations
+        run: node scripts/update-rates.mjs
+      - name: Commit verified changes only
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- public/rates-snapshot.json; then
+            echo "No new verified observations"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/rates-snapshot.json
+          git commit -m "data: refresh verified Bank of Canada rate observations"
+          git push origin HEAD:main
