@@ -29,6 +29,6 @@ test('mobile logo and route remain visible and avatar is suppressed to avoid col
 test('original navigation, security, local save, and rate services remain wired',()=>{
   for(const route of ["['discover','Find Properties'","['analyzer','Deal Analyzer'","['market','Market & Rates'","['refinance','Refinance Studio'"])assert.ok(app.includes(route));
   assert.match(html,/oakfolio\.css/);
-  assert.match(html,/script type="module" src="app\.js"/);
+  assert.match(html,/script type="module" src="app\.js(?:\?[^\"]+)?"/);
   assert.match(html,/connect-src 'self' https:\/\/www\.bankofcanada\.ca/);
 });
