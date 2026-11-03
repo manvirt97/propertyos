@@ -32,11 +32,12 @@ function ratePanels(mini=false){
   return '<div class="'+(mini?'oak-rates-mini':'oak-rate-grid')+'">'+items.map(([key,label,series])=>
     '<div class="oak-rate-tile"><span>'+e(label)+'</span><strong data-rate-key="'+key+'">—</strong><small data-rate-date="'+key+'">Connecting to Bank of Canada…</small></div>').join('')+'</div>';
 }
-function safeDeals(){try{return readDeals()}catch{return []}}
+let dealReadError='';
+function safeDeals(){try{const deals=readDeals();dealReadError='';return deals}catch(err){dealReadError=err.message||'Saved data unreadable';return []}}
 function summary(){const a=safeDeals().map(x=>{try{return analyze(x.inputs)}catch{return null}}).filter(Boolean);return {count:a.length,value:a.reduce((s,x)=>s+x.price,0),cash:a.reduce((s,x)=>s+x.monthlyCashFlow,0),units:a.reduce((s,x)=>s+x.units,0)}}
 export function renderOakHome(){
   const s=summary(),c=selectedCity();
-  return '<div class="oak-landing">'+
+  return '<div class="oak-landing">'+(dealReadError?'<div class="oak-alert" role="alert">Saved analyses could not be read: '+e(dealReadError)+'. Data was not overwritten. Restore from a backup in Settings before adding new records.</div>':'')+
     '<div class="oak-welcome"><span class="oak-label">OAKFOLIO / INVESTMENT WORKSPACE</span><span class="oak-location">◉ '+e(c.name+', '+c.province)+' <a href="#discover">Change market ↗</a></span></div>'+
     '<div class="oak-hero"><div class="oak-hero-copy"><span class="oak-hero-tag"><span class="oak-pulse"></span> REAL ESTATE, REIMAGINED</span>'+
     '<h1>See opportunity.<br><em>Build ownership.</em></h1><p>Discover multifamily opportunities, understand every financing decision and create a clear path to your next property—all in one place.</p>'+
@@ -55,7 +56,7 @@ export function renderOakHome(){
     '<div class="oak-journey"><a href="#discover"><span>01</span><strong>Discover</strong><small>Search multifamily markets</small></a><a href="#analyzer"><span>02</span><strong>Underwrite</strong><small>Test NOI, DSCR and risk</small></a><a href="#refinance"><span>03</span><strong>Finance</strong><small>Model borrowing and equity</small></a><a href="#coach"><span>04</span><strong>Grow</strong><small>Set a responsible strategy</small></a></div>'+
     '<div class="oak-page-foot">Oakfolio is an educational research and planning platform. No listing feeds, bank accounts or automatic trading are connected. Saved analyses remain on this device.</div></div>';
 }
-function candidates(){try{const raw=JSON.parse(localStorage.getItem('oakfolio.candidates')||'[]');return Array.isArray(raw)?raw.filter(x=>x&&typeof x.name==='string'&&typeof x.url==='string').slice(0,40):[]}catch{return []}}
+function candidates(){try{const raw=JSON.parse(localStorage.getItem('oakfolio.candidates')||'[]');return Array.isArray(raw)?raw.filter(x=>{try{const url=new URL(x.url);return typeof x.id==='string'&&typeof x.name==='string'&&x.name.length<=120&&typeof x.city==='string'&&url.protocol==='https:'&&!url.username&&!url.password&&url.href.length<=500&&Number.isFinite(x.price)&&x.price>0&&Number.isInteger(x.units)&&x.units>=1&&x.units<=10000}catch{return false}}).slice(0,40):[]}catch{return []}}
 function writeCandidates(rows){if(rows.length>40)throw Error('Maximum of 40 saved prospects');localStorage.setItem('oakfolio.candidates',JSON.stringify(rows))}
 export function renderExplore(){
  const c=selectedCity(),items=candidates();
@@ -65,7 +66,7 @@ export function renderExplore(){
  '<div class="oak-discover-grid">'+
  '<article class="oak-discover-card"><div class="oak-category-icon">⌂</div>'+pill('DUPLEX / TRIPLEX / FOURPLEX')+'<h3>Small multifamily</h3><p>Start with smaller rental buildings, house-hacking opportunities and additional suites. Check legal-unit status and zoning.</p>'+ext('Browse '+c.name+' multifamily',c.url)+'</article>'+
  '<article class="oak-discover-card"><div class="oak-category-icon">▥</div>'+pill('FIVE+ UNITS')+'<h3>Apartment investments</h3><p>Explore multi-unit assets and review commercial lending, NOI, vacancy, operating expenses and debt coverage.</p>'+ext('Explore listings at REALTOR.ca',c.url)+'</article>'+
- '<article class="oak-discover-card"><div class="oak-category-icon">◈</div>'+pill('DEAL PIPELINE')+'<h3>Save and investigate</h3><p>Found a property? Save its link locally and move its basic numbers into the Oakfolio Deal Analyzer.</p><a href="#oak-shortlist" class="oak-link">Add a property to your shortlist ↗</a></article></div>'+
+ '<article class="oak-discover-card"><div class="oak-category-icon">◈</div>'+pill('DEAL PIPELINE')+'<h3>Save and investigate</h3><p>Found a property? Save its link locally and move its basic numbers into the Oakfolio Deal Analyzer.</p><button type="button" data-oak-action="scroll-shortlist" class="oak-link oak-text-button">Add a property to your shortlist ↗</button></article></div>'+
  '<p class="oak-fine oak-data-note">Listing search links are verified for the supported cities. A licensed CREA DDF® feed is needed to display live MLS records, photos and updates directly inside Oakfolio. Selecting five-plus units does not automatically filter the provider results.</p>'+
  '<div id="oak-shortlist">'+section('PRIVATE SHORTLIST','Keep promising properties together.','Your property links and estimates stay in this browser. No account or cloud synchronization.')+'</div>'+
  '<div class="oak-shortlist-layout"><form id="oak-add-property" class="oak-form-card"><h3>Add a listing</h3><label>Property nickname or street (no tenant details)<input required maxlength="120" name="name" placeholder="e.g., 8-unit apartment near downtown"></label>'+
@@ -200,6 +201,7 @@ export function activateExperience(){
   if(goal){if(Object.hasOwn(guidance,goal.dataset.oakGoal)){coachGoal=goal.dataset.oakGoal;refreshView()}return}
   const el=ev.target.closest('[data-oak-action]');if(!el)return;
   const act=el.dataset.oakAction;
+  if(act==='scroll-shortlist'){document.getElementById('oak-shortlist')?.scrollIntoView({behavior:'smooth',block:'start'});return}
   if(act==='rates-refresh'){
    el.disabled=true;paintRates(null,'Refreshing');
    try{const fresh=await fetchRates(true);paintRates(fresh)}catch(error){paintRates(null,error.message)}finally{el.disabled=false}
