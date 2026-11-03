@@ -104,8 +104,26 @@ export function hydrateRates(){
 }
 export async function refreshRates(){
   for(const el of document.querySelectorAll('[data-oak-rate-status]'))el.textContent='Checking latest published rate observations…';
-  try{const fresh=await loadRates(true);renderRateWidgets(fresh);return true}
-  catch(err){renderRateWidgets(current,err.message);return false}
+  let staticError=null;
+  try{
+    const snapshot=await loadRates(true);
+    renderRateWidgets(snapshot);
+  }catch(err){staticError=err}
+  // The scheduled snapshot is the dependable route. Manual refresh also attempts
+  // the publisher directly, and merges only strictly newer, validated observations.
+  // CORS failures never erase values already confirmed by the Bank of Canada.
+  try{
+    const direct=await getDirect();
+    current=chooseNewer(direct,current||readLocal());
+    sourceKind='Direct Bank of Canada observations';
+    lastFetch=Date.now();writeLocal(current);
+    renderRateWidgets(current);
+    return true;
+  }catch{
+    const note=staticError?'Official data service unavailable.':'No browser-direct rate update available; showing the latest verified published snapshot.';
+    renderRateWidgets(current,note);
+    return !staticError;
+  }
 }
 export function updateImpact(key,value){
   if(!Object.hasOwn(impact,key))return false;
