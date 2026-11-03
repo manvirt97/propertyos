@@ -167,3 +167,5 @@ main#content{max-width:1500px}
 @media(max-width:440px){.oak-stats{gap:8px}.oak-result{padding:13px}.oak-result strong{font-size:19px}.oak-rate-tile{padding:12px}.oak-rate-grid .oak-rate-tile{padding:14px}.oak-rate-grid .oak-rate-tile strong{font-size:27px}.oak-rate-tile strong{font-size:26px}.oak-hero h1{font-size:35px}.oak-hero-copy{padding:26px 20px}.oak-hero-actions .oak-button{width:100%}.oak-input-row{grid-template-columns:1fr}.oak-journey a{padding:14px}.oak-results .oak-result strong{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.oak-landing,.oak-page{animation:none}.oak-button,.oak-journey>a{transition:none}}
 @media print{.oak-button,.oak-next-panel,.oak-location-actions,.oak-goals{display:none}.oak-hero,.oak-coach-advice,.oak-discover-hero{background:white;color:black}}
+
+.oak-text-button{background:transparent;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;font-size:12px;font-weight:800}
