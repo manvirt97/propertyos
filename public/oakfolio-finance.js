@@ -30,7 +30,7 @@ export function borrowingPlan(input){
   const dscr=finite(input.targetDscr,'Target DSCR',1,5);
   const rate=finite(input.rate,'Mortgage rate',0,40);
   const years=finite(input.years,'Amortization',1,50);
-  const ltv=finite(input.ltv,'LTV',1,100);
+  const ltv=finite(input.ltv,'LTV',1,99.9);
   const down=finite(input.cash,'Available investment cash',0);
   const closing=finite(input.closing,'Closing costs',0,30);
   const annualDebtCapacity=noi/dscr;
