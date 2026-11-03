@@ -51,3 +51,21 @@ test('CSP permits only official rate domain outside of same-origin',()=>{
  assert.ok(header.includes("frame-ancestors 'none'"));
  assert.ok(header.includes('geolocation=(self)'));
 });
+
+test('a forged javascript URL in local data never renders as a clickable link',()=>{
+ const prior=globalThis.localStorage;
+ globalThis.localStorage={getItem:key=>key==='oakfolio.candidates'?JSON.stringify([{id:'evil1',name:'Risky',url:'javascript:alert(1)',price:500000,units:2,city:'Calgary'}]):null};
+ try{const html=renderExplore();assert.ok(html.includes('No properties saved yet'));assert.ok(!html.includes('href="javascript:'))}
+ finally{if(prior===undefined)delete globalThis.localStorage;else globalThis.localStorage=prior}
+});
+test('shortlist scroll action does not alter the SPA route hash',()=>{
+ const html=renderExplore();
+ assert.ok(html.includes('data-oak-action="scroll-shortlist"'));
+ assert.ok(!html.includes('href="#oak-shortlist"'));
+});
+test('damaged original deal storage shows visible warning and does not overwrite records',()=>{
+ const prior=globalThis.localStorage;
+ globalThis.localStorage={getItem:key=>key==='propertyos.v1.deals'?'{broken':null};
+ try{const html=renderOakHome();assert.ok(html.includes('Saved analyses could not be read'));assert.ok(html.includes('Data was not overwritten'))}
+ finally{if(prior===undefined)delete globalThis.localStorage;else globalThis.localStorage=prior}
+});
