@@ -1,0 +1,35 @@
+name: Oakfolio production HTTP smoke
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify Cloudflare Pages serves Oakfolio after GitHub deployment
+        shell: bash
+        env:
+          URL: https://propertyos-6o2.pages.dev/
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 18); do
+            echo "Check $attempt: $URL"
+            if curl -fsSL --max-time 12 "$URL" -o /tmp/oakfolio.html && grep -q 'Oakfolio — Find opportunity' /tmp/oakfolio.html; then
+              echo 'Updated Oakfolio homepage found.'
+              for asset in app.js finance.js oakfolio-experience.js oakfolio-finance.js oakfolio.css; do
+                status=$(curl -L -s -o "/tmp/$asset" -w '%{http_code}' --max-time 12 "${URL}${asset}")
+                if [ "$status" != 200 ] || [ ! -s "/tmp/$asset" ]; then echo "Asset $asset unavailable: HTTP $status"; exit 1; fi
+                echo "$asset: HTTP 200"
+              done
+              echo 'Production HTTP smoke PASSED. Runtime UI and API fetching still need interactive testing.'
+              exit 0
+            fi
+            echo 'Not deployed yet, or site unavailable; retrying.'
+            sleep 10
+          done
+          echo 'Production HTTP smoke FAILED: Oakfolio homepage never confirmed at the configured URL.'
+          exit 1
