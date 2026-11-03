@@ -62,3 +62,7 @@ test('Valet invalid/missing rates fail closed',()=>{
   assert.throws(()=>latestValet({observations:[{d:'2026-10-28',V39079:{v:'broken'}}]},'V39079'));
   assert.throws(()=>latestValet({observations:[]},'V39079'));
 });
+
+test('borrow modeling rejects 100 percent financing with no closing costs',()=>{
+  assert.throws(()=>borrowingPlan({noi:65000,targetDscr:1.25,rate:5,years:25,ltv:100,cash:250000,closing:0}));
+});
