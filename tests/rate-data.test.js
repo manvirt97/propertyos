@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {SERIES,parseValetSeries,normalizeSnapshot,isStale} from '../public/rate-data.js';
 import {getOfficialSeries,buildSnapshot} from '../scripts/update-rates.mjs';
-import {renderImpactCalculator,updateImpact,loadRates,renderRateWidgets} from '../public/oakfolio-rates.js';
+import {renderImpactCalculator,updateImpact,loadRates,renderRateWidgets,refreshRates} from '../public/oakfolio-rates.js';
 import {readFileSync} from 'node:fs';
 
 const fixture=(series,values)=>({observations:values.map(([d,v])=>({d,[series]:{v:String(v)}}))});
@@ -103,4 +103,31 @@ test('reused rates preserve observation source dates in presentation, never labe
    assert.equal(records['[data-rate-key="bond"]'][0].textContent,'3.51%');
    assert.ok(records['[data-oak-rate-status]'][0].textContent.includes('not mortgage offers'));
  }finally{if(originals===undefined)delete globalThis.document;else globalThis.document=originals}
+});
+
+test('manual refresh merges new dated Bank observations and preserves independently validated series',async()=>{
+  const f=globalThis.fetch,storage=globalThis.localStorage,doc=globalThis.document;
+  const values={'V39079':2.5,'V80691311':4.7,'V39053':3.55,'V80691335':6.19};
+  const records=new Map();
+  globalThis.localStorage={getItem:k=>records.get(k)||null,setItem:(k,v)=>records.set(k,v)};
+  globalThis.document={querySelectorAll:()=>[]};
+  globalThis.fetch=async url=>{
+    if(url==='/rates-snapshot.json')return {ok:true,json:async()=>seed};
+    const id=Object.keys(values).find(x=>url.includes('/'+x+'/'));
+    if(!id)throw Error('Unexpected URL '+url);
+    return {ok:true,json:async()=>fixture(id,[['2026-11-02',values[id]]])};
+  };
+  try{
+    const ok=await refreshRates();
+    assert.equal(ok,true);
+    const updated=await loadRates();
+    assert.equal(updated.observations.prime.rate,4.7);
+    assert.equal(updated.observations.prime.date,'2026-11-02');
+    assert.equal(updated.observations.posted.rate,6.19);
+    assert.equal(updated.observations.bond.rate,3.55);
+  }finally{
+    if(f===undefined)delete globalThis.fetch;else globalThis.fetch=f;
+    if(storage===undefined)delete globalThis.localStorage;else globalThis.localStorage=storage;
+    if(doc===undefined)delete globalThis.document;else globalThis.document=doc;
+  }
 });
