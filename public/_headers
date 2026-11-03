@@ -6,6 +6,7 @@
   Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=()
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://www.bankofcanada.ca; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
   X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-cache, max-age=0, must-revalidate
 
 /
   Cache-Control: no-cache, no-store, must-revalidate
@@ -16,3 +17,34 @@
 /rates-snapshot.json
   Cache-Control: no-cache, must-revalidate
   Content-Type: application/json; charset=utf-8
+
+# iPhone standalone mode must revalidate scripts and styles after deployment.
+/app.js
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/oakfolio-experience.js
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/oakfolio-rates.js
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/rate-data.js
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/finance.js
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/store.js
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/oakfolio-finance.js
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/styles.css
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/oakfolio.css
+  Cache-Control: no-store, max-age=0, must-revalidate
+
+/manifest.webmanifest
+  Cache-Control: no-store, max-age=0, must-revalidate
