@@ -39,7 +39,7 @@ export function renderOakHome(){
   const s=summary(),c=selectedCity();
   return '<div class="oak-landing">'+(dealReadError?'<div class="oak-alert" role="alert">Saved analyses could not be read: '+e(dealReadError)+'. Data was not overwritten. Restore from a backup in Settings before adding new records.</div>':'')+
     '<div class="oak-welcome"><span class="oak-label">OAKFOLIO / INVESTMENT WORKSPACE</span><span class="oak-location">◉ '+e(c.name+', '+c.province)+' <a href="#discover">Change market ↗</a></span></div>'+
-    '<div class="oak-hero"><div class="oak-hero-copy"><span class="oak-hero-tag"><span class="oak-pulse"></span> REAL ESTATE, REIMAGINED</span>'+
+    '<div class="oak-hero"><div class="oak-hero-copy"><span class="oak-hero-tag"><span class="oak-pulse"></span> WELCOME TO OAKFOLIO</span>'+
     '<h1>See opportunity.<br><em>Build ownership.</em></h1><p>Discover multifamily opportunities, understand every financing decision and create a clear path to your next property—all in one place.</p>'+
     '<div class="oak-hero-actions">'+btn('Explore multifamily listings','discover')+'<a href="#refinance" class="oak-button oak-button-ghost">Unlock your equity <span aria-hidden="true">→</span></a></div>'+
     '<div class="oak-hero-caption"><span>CANADA-FIRST</span><span>PRIVACY-LED</span><span>NO SALES PRESSURE</span></div></div>'+
