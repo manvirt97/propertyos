@@ -6,7 +6,7 @@ import {renderOakHome,renderExplore,renderMarket,renderRefinance,renderCoach} fr
 test('premium dashboard includes discovery, market, refinance and coach links',()=>{
  const html=renderOakHome();
  for(const path of ['#discover','#refinance','#coach','#market','#analyzer'])assert.ok(html.includes(path),path);
- assert.ok(html.includes('REIMAGINED'));
+ assert.ok(html.includes('WELCOME TO OAKFOLIO'));
 });
 test('explorer opens verified original REALTOR.ca search links',()=>{
  const html=renderExplore();
