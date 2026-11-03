@@ -1,4 +1,4 @@
-name: PropertyOS QA
+name: Oakfolio QA
 on:
   pull_request:
   push:
@@ -23,3 +23,5 @@ jobs:
           node --check public/finance.js
           node --check public/store.js
           node --check public/app.js
+          node --check public/oakfolio-finance.js
+          node --check public/oakfolio-experience.js

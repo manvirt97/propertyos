@@ -1,0 +1,171 @@
+:root{--oak-ink:#1d2e29;--oak-deep:#173b32;--oak-accent:#b8a27c;--oak-surface:#f8f9f6;--oak-line:#e2e9e2;--oak-muted:#667870}
+body{background:#f7f9f6}
+.sidebar{overflow-y:auto;scrollbar-width:thin}
+.brand{margin-bottom:29px}
+.brand-icon{background:#1c4036}
+.side-link{padding:11px 13px}
+.top{background:#fff}
+main#content{max-width:1500px}
+.brand-icon span{color:#dfd1b3}
+.oak-landing,.oak-page{animation:oak-in .35s ease both}
+@keyframes oak-in{from{opacity:.7;transform:translateY(7px)}to{opacity:1;transform:none}}
+.oak-label{font-size:10px;letter-spacing:.17em;font-weight:800;color:#6b897a;text-transform:uppercase}
+.oak-welcome{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px;flex-wrap:wrap}
+.oak-location{font-size:11px;color:#5f786c;font-weight:700}
+.oak-location a{margin-left:9px;color:#295d4d;text-decoration:underline;text-underline-offset:4px}
+.oak-hero{border-radius:25px;overflow:hidden;display:grid;grid-template-columns:1.16fr 0.84fr;min-height:405px;background:#173b32;color:#fff;box-shadow:0 20px 55px #143b2c18;isolation:isolate}
+.oak-hero-copy{padding:clamp(29px,4.3vw,68px);position:relative;z-index:2;background:radial-gradient(circle at -10% -40%,#346d5485,transparent 65%)}
+.oak-hero-tag{display:inline-flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.17em;font-weight:800;color:#d4e7d8}
+.oak-pulse{height:7px;width:7px;border-radius:100%;background:#bcd7bb;box-shadow:0 0 0 5px #bcd7bb1b}
+.oak-hero h1{font-family:Georgia,'Times New Roman',serif;font-weight:500;font-size:clamp(36px,4.3vw,66px);letter-spacing:-.045em;line-height:1.06;margin:27px 0 18px}
+.oak-hero h1 em{font-style:italic;color:#d7c8a6}
+.oak-hero-copy>p{font-size:14px;line-height:1.76;color:#d4e3db;max-width:520px}
+.oak-hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:25px}
+.oak-button{border:0;background:#e3d5b7;color:#22372e;display:inline-flex;align-items:center;justify-content:space-between;gap:20px;min-height:45px;padding:12px 19px;border-radius:11px;font-weight:800;font-size:12px;line-height:1.3;transition:transform .2s,background .2s;cursor:pointer}
+.oak-button:hover{transform:translateY(-2px);background:#f1e6cb}
+.oak-button-ghost{background:transparent;color:#fff;border:1px solid #ffffff61}
+.oak-button-ghost:hover{background:#ffffff18}
+.oak-hero-caption{display:flex;gap:18px;margin-top:40px;color:#aac8b7;font-size:9px;letter-spacing:.13em;font-weight:800;flex-wrap:wrap}
+.oak-hero-visual{position:relative;overflow:hidden;background:linear-gradient(153deg,#356858,#1d493f 40%,#0f302b);min-height:350px}
+.oak-visual-sky{position:absolute;inset:0;background:radial-gradient(circle at 67% 25%,#9fc4a059,transparent 26%),linear-gradient(65deg,#0e322b55,transparent 80%)}
+.oak-sky-dot{position:absolute;top:17%;right:25%;width:82px;height:82px;border:1px solid #c8e0bb50;border-radius:50%;box-shadow:0 0 0 40px #bad8c306,0 0 0 100px #bad8c303}
+.oak-building{position:absolute;bottom:-4%;background:linear-gradient(135deg,#b4bca7,#6d887a);border:1px solid #e0e8ce6b;box-shadow:14px -10px 40px #07251a2d;display:grid;gap:13px;grid-template-columns:repeat(2,1fr);padding:28px 20px 60px;transform:skewY(-5deg)}
+.oak-building span{height:33px;width:24px;background:linear-gradient(120deg,#224b46,#325f57);border:2px solid #d4ddc359;box-shadow:inset 5px 0 #2e5852}
+.oak-b1{height:54%;width:35%;left:4%;background:linear-gradient(120deg,#9fbaa9,#648575)}
+.oak-b2{height:82%;width:37%;left:34%;background:linear-gradient(120deg,#d3d3b5,#8caa98);z-index:1}
+.oak-b3{height:67%;width:33%;right:-7%;background:linear-gradient(120deg,#a2b1a0,#567b71)}
+.oak-visual-float{position:absolute;bottom:26px;left:26px;z-index:3;background:#f9faf5ed;backdrop-filter:blur(14px);padding:17px 21px;border-radius:14px;box-shadow:0 15px 35px #0b28202e;display:grid;gap:4px;max-width:235px}
+.oak-visual-float small{font-size:8px;letter-spacing:.15em;font-weight:800;color:#537b67}
+.oak-visual-float strong{color:#243f35;font-size:18px;letter-spacing:-.05em}
+.oak-visual-float>span{font-size:10px;color:#6e8179}
+.oak-section-heading{margin:36px 0 17px}
+.oak-section-heading h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(22px,2.7vw,33px);font-weight:500;letter-spacing:-.03em;margin:8px 0}
+.oak-section-heading p{color:#74837a;font-size:12px;margin:0;max-width:790px}
+.oak-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.oak-result{min-width:0;border:1px solid #e3eae4;background:#fff;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:9px;box-shadow:0 9px 25px #16453208}
+.oak-result>span{font-size:11px;color:#718379;font-weight:700}
+.oak-result strong{font-size:clamp(19px,2vw,28px);letter-spacing:-.05em;color:#244339;overflow-wrap:anywhere}
+.oak-result small{font-size:10px;color:#89978c;line-height:1.5}
+.oak-home-split{display:grid;grid-template-columns:1.45fr 1fr;gap:17px;margin-top:20px}
+.oak-market-panel,.oak-next-panel,.oak-form-card,.oak-output-card,.oak-saved-panel{border:1px solid #e2e9e2;background:#fff;border-radius:18px;padding:24px;min-width:0;box-shadow:0 7px 28px #133e2d07}
+.oak-market-panel{background:#f7faf5}
+.oak-panel-head{display:flex;align-items:center;justify-content:space-between;gap:13px;margin-bottom:17px;flex-wrap:wrap}
+.oak-panel-head h3,.oak-panel-head h2{margin:4px 0 0;font-size:19px;letter-spacing:-.03em}
+.oak-inline-link{font-size:11px;color:#35745b;font-weight:800}
+.oak-rates-mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.oak-rate-tile{padding:17px;border:1px solid #e3eae1;border-radius:12px;background:#fff;min-width:0;display:flex;flex-direction:column;gap:7px}
+.oak-rate-tile span{font-size:11px;color:#6e8077}
+.oak-rate-tile strong{font-size:clamp(21px,2.1vw,31px);font-weight:800;color:#214b3b;letter-spacing:-.05em}
+.oak-rate-tile small{color:#8d9a8f;font-size:10px;line-height:1.45}
+.oak-fine{font-size:10px;color:#88958e;line-height:1.7;margin:12px 0 0}
+.oak-next-panel{background:#fff}
+.oak-next-panel h3{font-family:Georgia,'Times New Roman',serif;font-size:23px;font-weight:500;margin:8px 0 18px}
+.oak-next-panel>a{border-top:1px solid #edf0eb;display:flex;align-items:center;gap:13px;padding:15px 3px}
+.oak-next-panel>a span{font-size:11px;color:#91a295;font-weight:800}
+.oak-next-panel>a b{font-size:12px;font-weight:700;flex:1}
+.oak-next-panel>a i{font-style:normal;color:#357b62}
+.oak-next-panel>a:hover b{color:#24815d}
+.oak-location-preview{border-radius:18px;border:1px solid #d8e5d7;background:linear-gradient(120deg,#e7efe4,#f8faf4);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px}
+.oak-location-preview>div>span{font-size:21px;color:#467960}
+.oak-location-preview h3{font-size:18px;margin:8px 0}
+.oak-location-preview p{margin:0;color:#688275;font-size:12px;max-width:600px}
+.oak-location-preview .oak-button{background:#214b3a;color:#fff;flex-shrink:0}
+.oak-journey{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.oak-journey>a{display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid #e3eae4;border-radius:15px;padding:20px;min-height:125px;transition:transform .2s}
+.oak-journey>a:hover{transform:translateY(-3px)}
+.oak-journey span{color:#6a937e;font-size:10px;letter-spacing:.16em;font-weight:800;margin-bottom:8px}
+.oak-journey strong{font-size:16px}
+.oak-journey small{font-size:11px;color:#85958a;line-height:1.5}
+.oak-page-foot{font-size:11px;color:#829188;line-height:1.65;border-top:1px solid #e3eae4;margin-top:35px;padding-top:20px}
+.oak-page>h1{font-family:Georgia,'Times New Roman',serif;font-weight:500;letter-spacing:-.05em;font-size:clamp(36px,4.7vw,58px);line-height:1.1;margin:10px 0}
+.oak-page>h1 em{font-style:italic;color:#39725c}
+.oak-page-lede{font-size:14px;color:#74877a;line-height:1.7;max-width:800px;margin-bottom:26px}
+.oak-discover-hero{background:#193f35;color:#fff;border-radius:20px;padding:30px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.oak-discover-hero .oak-label{color:#b4cdb7}
+.oak-discover-hero h2{font-family:Georgia,'Times New Roman',serif;font-size:clamp(27px,4vw,43px);font-weight:400;margin:9px 0}
+.oak-discover-hero h2 span{font:600 12px Inter,Arial,sans-serif;color:#b3c9ba}
+.oak-discover-hero p{font-size:12px;max-width:490px;color:#c0d8c8;margin:0}
+.oak-location-actions{display:grid;gap:9px;min-width:235px}
+.oak-location-actions>label{font-size:10px;font-weight:800;color:#cbded0}
+.oak-location-actions>select{border:1px solid #a0c0ae81;background:#f4f8f1;color:#244b3b;border-radius:10px;padding:10px}
+.oak-outline{border-radius:10px;border:1px solid #c9d4c9;background:transparent;color:#2b5c4b;padding:10px 14px;font-size:12px;font-weight:700;cursor:pointer}
+.oak-location-actions .oak-outline{color:#e7f2e9;border-color:#a0c0ae80}
+.oak-outline:hover{background:#2b664214}
+.oak-discover-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.oak-discover-card{padding:24px;background:#fff;border:1px solid #e1e9e0;border-radius:18px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.oak-category-icon{font-size:27px;color:#3a8061;background:#edf5eb;padding:14px;border-radius:12px;margin-bottom:15px;line-height:1}
+.oak-pill{display:inline-flex;border-radius:20px;padding:6px 10px;background:#eaf1eb;color:#557a66;font-size:9px;letter-spacing:.09em;font-weight:800}
+.oak-discover-card h3{font-size:19px;margin:15px 0 7px}
+.oak-discover-card p{font-size:12px;color:#819188;line-height:1.7;flex:1}
+.oak-link{color:#287259;font-size:12px;font-weight:800;margin-top:15px;text-decoration:underline;text-underline-offset:4px}
+.oak-data-note{margin-bottom:20px}
+.oak-shortlist-layout{display:grid;grid-template-columns:1fr 1.2fr;align-items:start;gap:18px}
+.oak-form-card h3,.oak-saved-panel h3{font-size:20px;margin-bottom:15px}
+.oak-form-card label,.oak-field{display:grid;gap:7px;font-size:11px;font-weight:750;color:#536b5d;margin-bottom:14px}
+.oak-form-card input,.oak-field input{display:block;width:100%;min-width:0;border:1px solid #dce7de;border-radius:10px;padding:12px;background:#fcfdfb;color:#1f3b2e;font-size:13px}
+.oak-input-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.oak-form-card .oak-button{width:100%;background:#234d3b;color:white;margin-top:3px}
+.oak-form-card .oak-button:hover{background:#32614e}
+.oak-prospect{padding:15px 0;border-top:1px solid #edf1eb;display:flex;justify-content:space-between;gap:12px}
+.oak-prospect strong{display:block;font-size:12px;overflow-wrap:anywhere}
+.oak-prospect small{display:block;color:#86988b;font-size:11px;margin:6px 0}
+.oak-prospect .oak-link{font-size:11px}
+.oak-prospect-actions{display:flex;gap:6px;align-items:flex-start}
+.oak-prospect-actions button{background:#eaf2e9;border:0;border-radius:7px;padding:8px 10px;color:#2e624b;font-size:11px;white-space:nowrap;cursor:pointer}
+.oak-empty{text-align:center;padding:36px 19px;display:grid;gap:9px;justify-items:center}
+.oak-empty>span{font-size:38px;color:#75a28a}
+.oak-empty strong{font-size:15px}
+.oak-empty p,.oak-empty small{font-size:12px;color:#89978b;max-width:330px;margin:auto}
+.oak-rate-toolbar{margin:34px 0 15px}
+.oak-rate-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.oak-rate-grid .oak-rate-tile{padding:23px;min-height:137px}
+.oak-rate-grid .oak-rate-tile strong{font-size:36px}
+.oak-education-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.oak-tutorial{background:#fff;border:1px solid #e2e9e2;border-radius:16px;padding:23px}
+.oak-tutorial h3{font-size:17px;margin:12px 0 7px}
+.oak-tutorial p{font-size:12px;color:#829086;line-height:1.7}
+.oak-feature-note{display:flex;align-items:center;justify-content:space-between;gap:20px;border-radius:17px;padding:25px;background:#e5efe7;border:1px solid #d8e6dc;margin:25px 0}
+.oak-feature-note h3{font-size:20px;margin:10px 0}
+.oak-feature-note p{font-size:12px;color:#657e6d;max-width:650px}
+.oak-feature-note .oak-button{flex-shrink:0;background:#244d3b;color:#fff}
+.oak-alert,.oak-caution{border-left:3px solid #bd9e68;background:#faf3e6;border-radius:0 9px 9px 0;padding:16px 18px;color:#795d38;font-size:12px;line-height:1.7}
+.oak-tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;align-items:start}
+.oak-output-card{background:#f8faf5}
+.oak-feature-number{display:grid;gap:10px;padding:22px 0;border-bottom:1px solid #dce8de;margin-bottom:13px}
+.oak-feature-number span{font-size:12px;color:#63796a}
+.oak-feature-number strong{font-size:clamp(29px,3.2vw,43px);color:#1d5338;letter-spacing:-.065em}
+.oak-feature-number small{font-size:11px;color:#819688}
+.oak-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.oak-results .oak-result{padding:15px;box-shadow:none}
+.oak-results .oak-result strong{font-size:20px}
+.oak-strategy-tip{border-radius:12px;background:#e7efe5;padding:17px;margin-top:15px}
+.oak-strategy-tip b{font-size:12px}
+.oak-strategy-tip p{font-size:12px;color:#647d6c;margin:8px 0 0}
+.oak-coach-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:17px}
+.oak-goals{display:grid;gap:9px;margin:18px 0}
+.oak-goals button{background:#fff;border:1px solid #e2eae2;border-radius:10px;padding:15px 17px;font-size:12px;display:flex;justify-content:space-between;align-items:center;color:#2c4d3b;font-weight:750;text-align:left}
+.oak-goals button.selected{background:#e9f3e9;border:1px solid #8eae95;box-shadow:inset 3px 0 #538463}
+.oak-coach-context{border-top:1px solid #e5ece5;padding-top:16px;margin-top:18px}
+.oak-coach-context p{font-size:12px;margin:7px 0}
+.oak-coach-context small{font-size:10px;color:#88958e}
+.oak-coach-advice{background:#193f35;border:1px solid #294b3b;border-radius:19px;padding:31px;color:#fff}
+.oak-coach-advice .oak-label{color:#a3c5ae}
+.oak-coach-advice h2{font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(25px,3vw,38px);margin:18px 0}
+.oak-coach-advice>p{color:#c6ddd0;font-size:13px;line-height:1.85}
+.oak-coach-steps{display:grid;gap:8px;margin-top:23px}
+.oak-coach-steps a{border:1px solid #a4c9ad51;border-radius:10px;padding:13px 15px;font-size:12px;display:flex;align-items:center;justify-content:space-between;background:#ffffff0a}
+.oak-coach-steps a:hover{background:#ffffff20}
+.oak-coach-notice{font-size:10px;color:#b1cabc;line-height:1.6;margin-top:23px}
+.oak-ai-card{background:#f2f4ef;border:1px solid #dde7d9;border-radius:18px;padding:27px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.oak-ai-card h3{font-size:21px;margin:9px 0}
+.oak-ai-card p{font-size:12px;color:#728579;max-width:630px}
+.oak-ai-card .oak-button{background:#214d3b;color:#fff}
+.oak-ai-icon{font-size:80px;line-height:1;color:#a3b9a7}
+@media(max-width:1260px){.oak-stats,.oak-rate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.oak-discover-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.oak-home-split{grid-template-columns:1fr 1fr}.oak-hero{grid-template-columns:1.2fr .8fr}.oak-hero-copy{padding:33px}}
+@media(max-width:1050px){.oak-home-split,.oak-tool-grid,.oak-coach-layout{grid-template-columns:1fr}.oak-discover-grid{grid-template-columns:1fr 1fr}.oak-hero{grid-template-columns:1fr 0.8fr}.oak-hero h1{font-size:clamp(35px,4vw,49px)}.oak-hero-copy{padding:30px}.oak-journey{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:780px){.oak-hero{grid-template-columns:1fr}.oak-hero-copy{padding:30px 26px}.oak-hero h1{font-size:42px}.oak-hero-caption{margin-top:27px}.oak-hero-visual{min-height:225px}.oak-building{padding-top:8px}.oak-building span{width:15px;height:15px}.oak-visual-float{left:16px;bottom:16px}.oak-home-split,.oak-discover-grid,.oak-shortlist-layout,.oak-tool-grid,.oak-coach-layout{grid-template-columns:1fr}.oak-rate-grid,.oak-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.oak-education-grid{grid-template-columns:1fr}.oak-discover-hero{display:grid;padding:23px}.oak-location-actions{min-width:0}.oak-feature-note,.oak-location-preview{flex-wrap:wrap}.oak-ai-icon{display:none}.oak-page>h1{font-size:40px}.oak-market-panel,.oak-next-panel,.oak-form-card,.oak-output-card,.oak-saved-panel{padding:19px}.oak-journey{grid-template-columns:repeat(2,minmax(0,1fr))}.oak-section-heading{margin-top:27px}}
+@media(max-width:440px){.oak-stats{gap:8px}.oak-result{padding:13px}.oak-result strong{font-size:19px}.oak-rate-tile{padding:12px}.oak-rate-grid .oak-rate-tile{padding:14px}.oak-rate-grid .oak-rate-tile strong{font-size:27px}.oak-rate-tile strong{font-size:26px}.oak-hero h1{font-size:35px}.oak-hero-copy{padding:26px 20px}.oak-hero-actions .oak-button{width:100%}.oak-input-row{grid-template-columns:1fr}.oak-journey a{padding:14px}.oak-results .oak-result strong{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.oak-landing,.oak-page{animation:none}.oak-button,.oak-journey>a{transition:none}}
+@media print{.oak-button,.oak-next-panel,.oak-location-actions,.oak-goals{display:none}.oak-hero,.oak-coach-advice,.oak-discover-hero{background:white;color:black}}
+
+.oak-text-button{background:transparent;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;font-size:12px;font-weight:800}

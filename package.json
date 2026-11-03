@@ -1,11 +1,11 @@
 {
-  "name": "propertyos",
-  "version": "0.1.0",
+  "name": "oakfolio",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "syntax": "node --check public/finance.js && node --check public/store.js && node --check public/app.js"
+    "syntax": "node --check public/finance.js && node --check public/store.js && node --check public/app.js && node --check public/oakfolio-finance.js && node --check public/oakfolio-experience.js"
   },
   "engines": {
     "node": ">=20"
