@@ -1,0 +1,25 @@
+name: PropertyOS QA
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - name: Check production files and JavaScript syntax
+        run: |
+          test -s public/index.html
+          test -s public/finance.js
+          test -s public/app.js
+          test -s public/styles.css
+          node --check public/finance.js
+          node --check public/store.js
+          node --check public/app.js
