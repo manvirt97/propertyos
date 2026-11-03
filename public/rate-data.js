@@ -6,7 +6,7 @@ export const SERIES=Object.freeze({
   bond:{id:'V39053',label:'5-year GoC bond',maxAgeDays:10,source:'https://www.bankofcanada.ca/rates/interest-rates/lookup-bond-yields/'},
   posted:{id:'V80691335',label:'5-year posted mortgage',maxAgeDays:19,source:'https://www.bankofcanada.ca/rates/banking-and-financial-statistics/posted-interest-rates-offered-by-chartered-banks/'}
 });
-const dateOK=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&new Date(s+'T00:00:00Z').toISOString().startsWith(s);
+const dateOK=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&Number.isFinite(Date.parse(s+'T00:00:00Z'))&&new Date(s+'T00:00:00Z').toISOString().startsWith(s);
 const validRate=n=>n!==null&&n!==undefined&&n!==''&&Number.isFinite(Number(n))&&Number(n)>=0&&Number(n)<=40;
 export function validateObservation(item,key){
   const expected=SERIES[key];
