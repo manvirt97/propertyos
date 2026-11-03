@@ -169,3 +169,51 @@ main#content{max-width:1500px}
 @media print{.oak-button,.oak-next-panel,.oak-location-actions,.oak-goals{display:none}.oak-hero,.oak-coach-advice,.oak-discover-hero{background:white;color:black}}
 
 .oak-text-button{background:transparent;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;font-size:12px;font-weight:800}
+
+
+/* Recognizable Oakfolio identity — navigation chrome, desktop and mobile. */
+.sidebar{width:258px;padding:27px 14px}
+.brand{margin:2px 3px 24px;padding:12px 9px;gap:10px;border:1px solid #dfeae1;border-radius:15px;background:linear-gradient(138deg,#f2f6f0 0%,#fff 100%);box-shadow:0 8px 22px rgba(30,64,48,.035);font-family:Inter,Arial,sans-serif;min-width:0}
+.brand-lockup{min-width:0;display:grid;gap:5px}
+.brand-wordmark{font-family:Inter,Arial,sans-serif;font-weight:850;font-size:26px;line-height:1.05;letter-spacing:-.065em;color:#173d30;white-space:nowrap}
+.brand-wordmark span{color:#2b795b}
+.brand .brand-lockup small{font-size:8px;letter-spacing:.11em;font-weight:800;white-space:nowrap;color:#698576;line-height:1.25}
+.brand-icon-image{width:42px;height:42px;display:block;flex:none;object-fit:contain;border-radius:11px}
+.brand:hover{background:#eaf2e8}
+.top-identity{display:flex;align-items:center;gap:16px;min-width:0}
+.top-brand{display:inline-flex;align-items:center;gap:9px;flex:none;white-space:nowrap}
+.top-brand img{width:33px;height:33px;display:block;border-radius:9px;flex:none}
+.top-brand strong{font-family:Inter,Arial,sans-serif;font-size:22px;letter-spacing:-.055em;font-weight:850;color:#1b4635}
+.top-brand strong span{color:#2b795b}
+.top-brand:hover strong{color:#2e8060}
+.top-identity-divider{width:1px;height:23px;background:#dce8df;flex:none}
+.top-page{color:#536a5c;font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oak-hero-tag{padding:8px 13px;border-radius:50px;border:1px solid #ffffff3c;background:#ffffff15;color:#efe5c7;letter-spacing:.11em;font-size:11px}
+@media(max-width:1180px) and (min-width:781px){
+  .sidebar{width:241px;padding-inline:11px}
+  .brand{margin-inline:1px;padding-inline:8px}
+  .brand-wordmark{font-size:25px}
+  .brand-icon-image{width:40px;height:40px}
+}
+@media(max-width:780px){
+  .top{height:66px;padding:0 15px}
+  .top-identity{gap:11px;flex:1;min-width:0}
+  .top-brand{gap:8px}
+  .top-brand strong{font-size:21px}
+  .top-brand img{width:32px;height:32px}
+  .top-identity-divider{height:19px}
+  .top-page{font-size:11px;min-width:0}
+  .top-right .avatar{display:none}
+  .top-right{gap:0}
+  .oak-hero-tag{font-size:10px;line-height:1.3}
+}
+@media(max-width:360px){
+  .top{padding:0 12px}
+  .top-identity{gap:8px}
+  .top-brand img{width:28px;height:28px}
+  .top-brand strong{font-size:19px}
+  .oak-hero-tag{letter-spacing:.07em}
+}
+@media print{
+  .top-brand{display:none}
+}
