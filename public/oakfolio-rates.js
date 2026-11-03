@@ -5,7 +5,7 @@ const KEY='oakfolio.public-rates.v1';
 const specs=SERIES;
 let current=null,sourceKind='',lastFetch=0,pending=null;
 const impact={balance:500000,rate:5,years:25};
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const timer=ms=>new AbortController();
 function readLocal(){
   try{return normalizeSnapshot(JSON.parse(localStorage.getItem(KEY)||'null'))}catch{return null}
