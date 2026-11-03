@@ -25,3 +25,7 @@ jobs:
           node --check public/app.js
           node --check public/oakfolio-finance.js
           node --check public/oakfolio-experience.js
+          node --check public/oakfolio-rates.js
+          node --check public/rate-data.js
+          node --check scripts/update-rates.mjs
+          test -s public/rates-snapshot.json
