@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "syntax": "node --check public/finance.js && node --check public/store.js && node --check public/app.js && node --check public/oakfolio-finance.js && node --check public/oakfolio-experience.js"
+    "syntax": "node --check public/finance.js && node --check public/store.js && node --check public/app.js && node --check public/oakfolio-finance.js && node --check public/oakfolio-experience.js && node --check public/rate-data.js && node --check public/oakfolio-rates.js && node --check scripts/update-rates.mjs"
   },
   "engines": {
     "node": ">=20"
