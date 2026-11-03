@@ -13,7 +13,8 @@ test('initial official observations are dated and never claim a current quote',(
   assert.equal(n.observations.policy.date,'2026-10-30');
   assert.equal(n.observations.prime.rate,4.45);
   assert.equal(n.observations.posted.rate,6.19);
-  assert.equal(n.observations.bond,undefined);
+  assert.equal(n.observations.bond.rate,3.51);
+  assert.equal(n.observations.bond.date,'2026-10-30');
 });
 test('one missing rate does not blank other verified observations',()=>{
   const parsed=normalizeSnapshot({version:1,source:'Bank of Canada Valet API',checked_at:null,observations:{policy:{series:SERIES.policy.id,date:'2026-11-02',rate:2.5},prime:{date:'2026-11-02',rate:'bad'}}});
@@ -79,7 +80,7 @@ test('browser gets last verified data from same-origin static file without a pai
    const normalized=await loadRates(true);
    assert.equal(url,'/rates-snapshot.json');
    assert.equal(normalized.observations.policy.rate,2.5);
-   assert.equal(normalized.observations.bond,undefined);
+   assert.equal(normalized.observations.bond.rate,3.51);
    assert.ok(cache.has('oakfolio.public-rates.v1'));
  }finally{
    if(originalFetch===undefined)delete globalThis.fetch;else globalThis.fetch=originalFetch;
@@ -99,7 +100,7 @@ test('reused rates preserve observation source dates in presentation, never labe
    renderRateWidgets(data);
    assert.equal(records['[data-rate-key="policy"]'][0].textContent,'2.50%');
    assert.match(records['[data-rate-date="policy"]'][0].textContent,/2026-10-30/);
-   assert.equal(records['[data-rate-key="bond"]'][0].textContent,'—');
+   assert.equal(records['[data-rate-key="bond"]'][0].textContent,'3.51%');
    assert.ok(records['[data-oak-rate-status]'][0].textContent.includes('not mortgage offers'));
  }finally{if(originals===undefined)delete globalThis.document;else globalThis.document=originals}
 });
