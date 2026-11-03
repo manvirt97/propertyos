@@ -31,7 +31,7 @@ test('refinance page contains new capacity and growth models with clear caveats'
 test('strategy guide is explicitly rules-based, not represented as real AI',()=>{
  const html=renderCoach();
  assert.ok(html.includes('rules-based'));
- assert.ok(html.includes('without any API key'));
+ assert.ok(html.includes('No new API subscription or secret'));
  assert.ok(html.includes('data-oak-action="copy-prompt"'));
 });
 test('stored hostile prospect text is escaped in the shortlist',()=>{
