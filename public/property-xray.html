@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102d28"><title>Property X-Ray · Oakfolio</title>
+<meta name="description" content="Compare owner-occupied, rental and existing-home equity scenarios with your own assumptions.">
+<link rel="icon" href="/icon.svg"><link rel="stylesheet" href="/property-xray.css">
+</head><body>
+<header class="bar"><a class="brand" href="/#overview">◈ Oak<span>folio</span></a><a class="back" href="/#overview">← Workspace</a></header>
+<main class="wrap">
+<div class="hero"><div class="eyebrow">OAKFOLIO / PROPERTY X-RAY</div><h1>One property.<br><em>Three financial perspectives.</em></h1>
+<p>See the hidden tradeoffs in a potential property purchase. Every number is calculated from the assumptions you enter—not scraped listings, pre-approvals, or fabricated market rates.</p></div>
+<div class="layout"><section class="panel" aria-labelledby="assume-heading">
+<div class="eyebrow">01 / YOUR ASSUMPTIONS</div><h2 id="assume-heading">Set the numbers</h2>
+<p class="muted">Start with your own listing and mortgage estimates. Nothing is saved or transmitted.</p>
+<form id="inputs" autocomplete="off">
+<div class="fields">
+<label>Property purchase price (CAD)<input name="price" type="number" min="10000" max="100000000" step="1000" value="550000" required></label>
+<label>Down payment (%)<input name="down" type="number" min="0" max="100" step=".5" value="20" required></label>
+<label>Mortgage interest rate (%)<input name="rate" type="number" min="0" max="40" step=".05" value="5" required></label>
+<label>Amortization (years)<input name="years" type="number" min="1" max="50" step="1" value="25" required></label>
+<label>Whole-property monthly rent (CAD)<input name="fullRent" type="number" min="0" max="1000000" value="2800" required></label>
+<label>Monthly rent from other units if you live there (CAD)<input name="partialRent" type="number" min="0" max="1000000" value="1300" required></label>
+<label>Monthly tax, insurance, upkeep &amp; other operating costs (CAD)<input name="costs" type="number" min="0" max="1000000" value="700" required></label>
+<label>Rental vacancy / loss (%)<input name="vacancy" type="number" min="0" max="100" value="5" step=".5" required></label>
+</div>
+<details class="equity-input"><summary>Optional: explore borrowing against your existing home</summary><div class="fields">
+<label>Estimated existing-home value (CAD)<input name="homeValue" type="number" min="0" max="100000000" value="0"></label>
+<label>Current mortgage balance (CAD)<input name="homeBalance" type="number" min="0" max="100000000" value="0"></label>
+<label>Illustrative borrowing limit (% LTV)<input name="ltv" type="number" min="0" max="80" step=".5" value="65"></label>
+</div><p class="muted">Not a lender offer. Actual product rules, qualification, appraisal, fees and Canadian regulations differ.</p></details>
+</form></section>
+<section class="results" aria-live="polite"><div class="eyebrow">02 / COMPARE POSSIBLE PATHS</div><h2>Your property, decoded</h2><p class="muted" id="calculation-note">Estimates are illustrative, before income taxes and purchase/closing costs.</p><div class="scenarios" id="scenarios"></div>
+<div class="takeaway"><div class="eyebrow">THE CONVERSATION STARTER</div><h3 id="headline">Calculate your property tradeoffs</h3><p id="explanation"></p></div>
+<div class="share"><label class="privacy"><input id="includeNumbers" type="checkbox"> Include estimated dollar figures in the text I share</label><button id="share" type="button">Share my X-Ray ↗</button><small id="share-status" role="status"></small></div>
+</section></div>
+<div class="legal">Planning estimates, not financial, legal, tax or mortgage advice. Owner-occupier treatment, insured financing and eligible rental offsets are not modeled. The rental comparison assumes an investment property and does not include down payment opportunity cost, closing costs, income taxes or capital appreciation. No automatic approval or verified listing data. Never share numbers unless you choose to.</div>
+</main><script type="module" src="/property-xray.js"></script></body></html>
