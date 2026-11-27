@@ -1,13 +1,13 @@
 {
   "version": 1,
   "source": "Bank of Canada Valet API",
-  "checked_at": "2026-11-26T23:52:15.822Z",
+  "checked_at": "2026-11-27T23:28:50.197Z",
   "observations": {
     "policy": {
       "series": "V39079",
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "rate": 2.5,
-      "previousDate": "2026-11-24",
+      "previousDate": "2026-11-25",
       "previousRate": 2.5
     },
     "prime": {
